@@ -75,4 +75,12 @@ public class PaymentServiceImpl implements PaymentService {
         return paymentRepository.findAll().stream()
                 .map(PaymentMapper::toPaymentDto).collect(Collectors.toList());
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public BigDecimal getPaymentSumByPayer(String payerLogin) {
+        Payer payer = payerService.getPayerByLogin(payerLogin);
+
+        return paymentRepository.getSumByPayer(payer.getId());
+    }
 }
