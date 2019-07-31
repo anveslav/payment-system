@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.UUID;
 
 @Data
@@ -17,8 +18,10 @@ public class PaymentDto {
     private BigDecimal amount;
 
     @NotNull
-    private String payerLogin;
+    private String payer;
 
     @NotNull
-    private String payeeLogin;
+    private String payee;
+
+    private Date createdDate;
 }

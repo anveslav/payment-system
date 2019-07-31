@@ -10,8 +10,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.time.Instant;
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.UUID;
 
 @Data
@@ -33,7 +32,7 @@ public class Payment {
 
     @Column(name = "created_date", nullable = false, updatable = false)
     @CreatedDate
-    private long createdDate;
+    private Date createdDate;
 
     @ManyToOne
     @JoinColumn(name = "payer_id")
