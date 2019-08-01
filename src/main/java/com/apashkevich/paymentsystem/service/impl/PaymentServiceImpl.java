@@ -61,7 +61,7 @@ public class PaymentServiceImpl implements PaymentService {
             throw new InsufficientFundsException("Insufficient funds in the payer's account");
         }
 
-        BigDecimal newPayeeAmount = payee.getAccount().subtract(payment.getAmount());
+        BigDecimal newPayeeAmount = payee.getAccount().add(payment.getAmount());
         BigDecimal newPayerAmount = payer.getAccount().subtract(payment.getAmount());
 
         payee.setAccount(newPayeeAmount);
