@@ -1,5 +1,8 @@
 package com.apashkevich.paymentsystem.service.impl;
 
+import com.apashkevich.paymentsystem.exception.InsufficientFundsException;
+import com.apashkevich.paymentsystem.exception.PayeeNotFoundException;
+import com.apashkevich.paymentsystem.exception.PayerNotFoundException;
 import com.apashkevich.paymentsystem.model.Payee;
 import com.apashkevich.paymentsystem.model.Payer;
 import com.apashkevich.paymentsystem.model.Payment;
@@ -38,9 +41,12 @@ public class PaymentServiceImpl implements PaymentService {
         Payer payer = payerService.getPayerByLogin(paymentDto.getPayer());
         Payee payee = payeeService.getPayeeByLogin(paymentDto.getPayee());
 
-        if (payer == null || payee == null) {
-            log.error("Couldn't find payer or payee");
-            throw new RuntimeException();
+        if (payer == null) {
+            log.error("Couldn't find payer");
+            throw new PayerNotFoundException("Couldn't find payer with login:" + paymentDto.getPayer());
+        } else if (payee == null) {
+            log.error("Couldn't find payee");
+            throw new PayeeNotFoundException("Couldn't find payee with login:" + paymentDto.getPayee());
         }
 
         Payment payment = Payment.builder().amount(paymentDto.getAmount())
@@ -52,7 +58,7 @@ public class PaymentServiceImpl implements PaymentService {
 
         if (payerBalance.compareTo(payment.getAmount()) == -1) {
             log.error("Balance should be more or equals to payment amount");
-            throw new RuntimeException();
+            throw new InsufficientFundsException("Insufficient funds in the payer's account");
         }
 
         BigDecimal newPayeeAmount = payee.getAccount().subtract(payment.getAmount());
@@ -80,7 +86,10 @@ public class PaymentServiceImpl implements PaymentService {
     @Transactional(readOnly = true)
     public BigDecimal getPaymentSumByPayer(String payerLogin) {
         Payer payer = payerService.getPayerByLogin(payerLogin);
-
+        if (payer == null){
+            log.error("Couldn't find payer");
+            throw new PayerNotFoundException("Couldn't find payer with login:" + payerLogin);
+        }
         return paymentRepository.getSumByPayer(payer.getId());
     }
 }
