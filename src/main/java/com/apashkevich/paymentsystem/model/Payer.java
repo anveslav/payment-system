@@ -20,6 +20,7 @@ public class Payer {
 
     @Id
     @GeneratedValue
+    @Column(name = "payer_id")
     private Long id;
 
     @Column(name = "payer_login", length = 30, nullable = false, unique = true)

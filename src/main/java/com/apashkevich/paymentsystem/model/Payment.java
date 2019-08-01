@@ -22,11 +22,11 @@ import java.util.UUID;
 public class Payment {
 
     @Id
-    //@Type(type="pg-uuid")
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "payment_id")
     private UUID id;
 
-    @Column(name = "payer_account")
+    @Column(name = "amount")
     private BigDecimal amount;
 
     @Column(name = "created_date", nullable = false, updatable = false)

@@ -20,6 +20,7 @@ public class Payee {
 
     @Id
     @GeneratedValue
+    @Column(name = "payee_id")
     private Long id;
 
     @Column(name = "payee_login", length = 30, nullable = false, unique = true)

@@ -92,7 +92,7 @@ public class PaymentApiIntegrationTest {
 
         this.mockMvc.perform(post("/payment")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(JsonMapper.PaymentDtoToJson(paymentDto)))
+                .content(JsonMapper.paymentDtoToJson(paymentDto)))
                 .andExpect(status().isOk())
                 .andExpect(content()
                         .contentType("application/json;charset=UTF-8"))
@@ -124,7 +124,7 @@ public class PaymentApiIntegrationTest {
 
         this.mockMvc.perform(post("/payment")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(JsonMapper.PaymentDtoToJson(paymentDto)))
+                .content(JsonMapper.paymentDtoToJson(paymentDto)))
                 .andExpect(status().isNotFound());
 
         Assert.assertEquals(paymentRepository.findAll().size(), 0);
@@ -142,7 +142,7 @@ public class PaymentApiIntegrationTest {
 
         this.mockMvc.perform(post("/payment")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(JsonMapper.PaymentDtoToJson(paymentDto)))
+                .content(JsonMapper.paymentDtoToJson(paymentDto)))
                 .andExpect(status().isBadRequest());
 
         Payer payer = payerRepository.findByLogin(PAYER_LOGIN);

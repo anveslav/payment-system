@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class JsonMapper {
 
-    public static String PaymentDtoToJson(PaymentDto paymentDto){
+    public static String paymentDtoToJson(PaymentDto paymentDto){
         ObjectWriter mapper = new ObjectMapper().writer().withDefaultPrettyPrinter();
         try {
             return mapper.writeValueAsString(paymentDto);
